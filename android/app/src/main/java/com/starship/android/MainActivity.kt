@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
+import java.io.File
 import org.libsdl.app.SDLActivity
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -49,6 +50,10 @@ class MainActivity : SDLActivity() {
     // SDLActivity refuses to start if the Java glue and libSDL2.so disagree on
     // their version, so both have to move together.
     override fun getLibraries(): Array<String> = arrayOf("SDL2", "Starship")
+
+    // SDL resolves the engine's directory through this, so it has to agree with GameAssets.gameDir.
+    override fun getExternalFilesDir(type: String?): File? =
+        if (type == null) GameAssets.gameDir(this) else super.getExternalFilesDir(type)
 
     private external fun attachController()
     private external fun detachController()
