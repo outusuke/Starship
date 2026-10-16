@@ -52,6 +52,8 @@ jobs:
   build-release:
     needs: generate-port-o2r
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
       with:
