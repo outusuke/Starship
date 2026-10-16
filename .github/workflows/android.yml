@@ -71,10 +71,13 @@ jobs:
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+      with:
+        # the default "tools" package is no longer served and fails the step
+        packages: ''
 
     - name: Install NDK
       run: |
-        echo "y" | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;30.0.15729638"
+        echo "y" | sdkmanager --install "ndk;30.0.15729638"
 
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y ninja-build
