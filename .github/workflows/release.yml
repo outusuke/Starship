@@ -91,10 +91,11 @@ jobs:
       uses: gradle/actions/setup-gradle@v3
       
     - name: Setup signing keystore
-      if: env.KEYSTORE_FILE != ''
       run: |
-        echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > android/app/release.keystore
-        test -s android/app/release.keystore || (echo "Failed to create keystore file" && exit 1)
+        if [ -n "$KEYSTORE_FILE" ]; then
+          echo "$KEYSTORE_FILE" | base64 -d > android/app/release.keystore
+          test -s android/app/release.keystore || (echo "Failed to create keystore file" && exit 1)
+        fi
       env:
         KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
 
